@@ -12,9 +12,11 @@
           - if ENV.fetch('OSEM_ICHAIN_ENABLED', nil) == 'true'
             = link_to(new_ichain_registration_path('user')) do
               sign up
-          - else
+          - elsif ENV.fetch('OSEM_DISABLE_REGISTRATION', nil) != 'true'
             = link_to(new_registration_path('user')) do
               sign up
+          - else
+            sign in
           will the be administrator of it.
         %p
           We hope you enjoy using OSEM, if you have any question don't hesitate to

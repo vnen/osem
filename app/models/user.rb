@@ -53,10 +53,18 @@ class User < ApplicationRecord
 
   devise_modules += if ENV.fetch('OSEM_ICHAIN_ENABLED', nil) == 'true'
                       [:ichain_authenticatable, :ichain_registerable, :omniauthable, omniauth_providers: []]
+                    elsif ENV.fetch('OSEM_DISABLE_REGISTRATION', nil) == 'true'
+                      [
+                       :database_authenticatable,
+                       #:registerable,
+                       :recoverable,
+                       :rememberable, :trackable,
+                       #:validatable, :confirmable,
+                       :omniauthable, omniauth_providers: [:suse, :google, :facebook, :github, :keycloakopenid]]
                     else
-                      [:database_authenticatable, :registerable,
-                       :recoverable, :rememberable, :trackable, :validatable, :confirmable,
-                       :omniauthable, omniauth_providers: [:suse, :google, :facebook, :github]]
+                      [:database_authenticatable, :registerable, :recoverable,
+                       :rememberable, :trackable, :validatable, :confirmable,
+                       :omniauthable, omniauth_providers: [:suse, :google, :facebook, :github, :keycloakopenid]]
                     end
 
   devise(*devise_modules)
@@ -278,6 +286,9 @@ class User < ApplicationRecord
 
   def setup_role
     self.is_admin = true if User.empty?
+    if ENV.fetch('OSEM_DISABLE_REGISTRATION', nil) == 'true'
+      self.password = Devise.friendly_token[0, 20]
+    end
   end
 
   def touch_events

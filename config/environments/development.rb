@@ -124,6 +124,21 @@ Rails.application.configure do
                               secret: 'github_mock_secret'
                             }
                           )
+  OmniAuth.config.mock_auth[:keycloakopenid] =
+    OmniAuth::AuthHash.new(
+                            provider:    'keycloakopenid',
+                            uid:         'keycloakopenid-test-uid-1',
+                            info:        {
+                              name:     'keycloak user',
+                              email:    'user-keycloak@example.com',
+                              username: 'user_keyclaoak',
+                              password: '123456'
+                            },
+                            credentials: {
+                              token:  'keycloak_mock_token',
+                              secret: 'keycloak_mock_secret'
+                            }
+                          )
   config.after_initialize do
     Devise.setup do |devise_config|
       # Enable ichain test mode

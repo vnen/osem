@@ -116,7 +116,7 @@ class ConferenceRegistrationsController < ApplicationController
           qanswers_attributes: [],
           event_ids: [],
           user_attributes: [
-            :username, :email, :name, :password, :password_confirmation]
+            :username, :email, :name]
     )
   end
 end

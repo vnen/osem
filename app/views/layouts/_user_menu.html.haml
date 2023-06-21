@@ -10,7 +10,7 @@
     %li= link_to "See all unread Comments (#{unread_notifications(current_user).length})", admin_comments_path
   %li= link_to 'See all Comments', admin_comments_path(anchor: 'all_comments')
   %li.divider
-- unless ENV.fetch('OSEM_ICHAIN_ENABLED', nil) == 'true'
+- unless ENV.fetch('OSEM_ICHAIN_ENABLED', nil) == 'true' || ENV.fetch('OSEM_DISABLE_REGISTRATION', nil) == 'true'
   %li
     = link_to(edit_user_registration_path) do
       %span.fa-solid.fa-wrench

@@ -6,7 +6,8 @@
           %h3.panel-title
             Sign In
         .panel-body
-          = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
-            = render partial: 'form_fields', locals: { f: f }
+          - if ENV.fetch('OSEM_DISABLE_REGISTRATION', nil) != 'true'
+            = form_for(resource, as: resource_name, url: session_path(resource_name)) do |f|
+              = render partial: 'form_fields', locals: { f: f }
           = render partial: 'devise/shared/openid'
           = render partial: 'devise/shared/help'

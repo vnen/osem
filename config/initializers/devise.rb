@@ -12,6 +12,9 @@ Devise.setup do |config|
                   scope: 'email'
   config.omniauth :facebook, ENV.fetch('OSEM_FACEBOOK_KEY', Rails.application.secrets.facebook_key), ENV.fetch('OSEM_FACEBOOK_SECRET', Rails.application.secrets.facebook_secret)
   config.omniauth :github, ENV.fetch('OSEM_GITHUB_KEY', Rails.application.secrets.github_key), ENV.fetch('OSEM_GITHUB_SECRET', Rails.application.secrets.github_secret)
+  config.omniauth :keycloakopenid, ENV.fetch('OSEM_KEYCLOAKOPENID_KEY', Rails.application.secrets.keycloak_key), ENV.fetch('OSEM_KEYCLOAKOPENID_SECRET', Rails.application.secrets.keycloak_secret),
+                  client_options: { site: ENV.fetch('OSEM_KEYCLOAKOPENID_SITE', Rails.application.secrets.keycloak_site), realm: ENV.fetch('OSEM_KEYCLOAKOPENID_REALM', Rails.application.secrets.keycloak_realm), base_url: ENV.fetch('OSEM_KEYCLOAKOPENID_BASE_URL', Rails.application.secrets.keycloak_base_url),  },
+                  :strategy_class => OmniAuth::Strategies::KeycloakOpenId
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,

@@ -15,7 +15,11 @@ module Users
       auth_hash = request.env['omniauth.auth']
       unless auth_hash.info.email.present?
         flash[:error] = "Email field is missing in your #{provider} account"
-        redirect_to new_user_registration_path
+        if ENV.fetch('OSEM_DISABLE_REGISTRATION', nil) == 'true'
+          redirect_to root_path
+        else
+          redirect_to new_user_registration_path
+        end
         return
       end
       username = auth_hash.info.email.split('@')[0]
@@ -38,7 +42,12 @@ module Users
         redirect_to root_path, notice: "#{user.email} signed in successfully with #{provider}"
       rescue => e
         flash[:error] = e.message
-        redirect_back_or_to new_user_registration_path
+        if ENV.fetch('OSEM_DISABLE_REGISTRATION', nil) == 'true'
+          redirect_back_or_to root_path
+          # redirect_back_or_to new_user_registration_path
+        else
+          redirect_back_or_to new_user_registration_path
+        end
       end
     end
   end

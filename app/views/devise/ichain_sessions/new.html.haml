@@ -11,16 +11,17 @@
             = f.hidden_field :context, value: @context
             = f.hidden_field :proxypath, value: @proxypath
 
-            .form-group
-              = f.label :username, "Username"
-              %abbr{title: 'This field is required'} *
-              = f.text_field :username, autofocus: true, required: true, class: 'form-control', placeholder: 'Username'
-            .form-group
-              = f.label :password, "Password"
-              %abbr{title: 'This field is required'} *
-              = f.password_field :password, required: true, class: 'form-control', placeholder: 'Password'
-            %p.text-right
-              %button{type: 'submit', class: 'btn btn-success'}
-                Sign In
+            if ENV.fetch('OSEM_DISABLE_REGISTRATION', nil) != 'true'
+              .form-group
+                = f.label :username, "Username"
+                %abbr{title: 'This field is required'} *
+                = f.text_field :username, autofocus: true, required: true, class: 'form-control', placeholder: 'Username'
+              .form-group
+                = f.label :password, "Password"
+                %abbr{title: 'This field is required'} *
+                = f.password_field :password, required: true, class: 'form-control', placeholder: 'Password'
+              %p.text-right
+                %button{type: 'submit', class: 'btn btn-success'}
+                  Sign In
 
-            = render partial: 'devise/shared/help'
+              = render partial: 'devise/shared/help'
