@@ -10,7 +10,9 @@ module Admin
 
     def create
       @user = User.new(user_params)
-      @user.skip_confirmation!
+      if ENV.fetch('OSEM_DISABLE_REGISTRATION', nil) != 'true'
+        @user.skip_confirmation!
+      end
       if @user.save
         redirect_to admin_users_path, notice: 'User successfully created.'
       else

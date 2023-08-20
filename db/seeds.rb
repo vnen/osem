@@ -13,7 +13,9 @@ user = User.find_or_initialize_by(email: 'deleted@localhost.osem', name: 'User d
                                   username: 'deleted_user', is_disabled: true,
                                   biography: 'Data is no longer available for deleted user.')
 user.password = Devise.friendly_token[0, 20]
-user.skip_confirmation!
+if ENV.fetch('OSEM_DISABLE_REGISTRATION', nil) != 'true'
+  user.skip_confirmation!
+end
 user.save!
 
 # Questions

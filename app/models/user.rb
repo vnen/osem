@@ -218,7 +218,9 @@ class User < ApplicationRecord
       user.name = auth.info.name
       user.username = auth.info.username
       user.password = Devise.friendly_token[0, 20]
-      user.skip_confirmation!
+      if ENV.fetch('OSEM_DISABLE_REGISTRATION', nil) != 'true'
+        user.skip_confirmation!
+      end
     end
 
     user
