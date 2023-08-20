@@ -14,7 +14,7 @@
             = render partial: 'shared/user_selectize'
           .tab-pane#commercials-content
             %p.text-muted
-              You can add commercials for your proposal. These commercials will be displayed on the
+              You can optionally add commercials for your proposal. These commercials will be displayed on the
               = link_to 'public proposal page.', conference_program_proposal_path(@conference.short_title, @event)
               If you don't add a commercial, the conference commercial will be displayed!
             - if can? :create, @event.commercials.new
@@ -39,5 +39,3 @@
                           - if can? :update, commercial
                             = form_for(commercial, url: conference_program_proposal_commercial_path(conference_id: @conference.short_title, proposal_id: @event, id: commercial)) do |f|
                               = render partial: 'proposals/commercial_form_fields', locals: { f: f, commercial: commercial }
-
-
